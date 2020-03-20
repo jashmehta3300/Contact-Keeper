@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "client install": "npm install --prefixx client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -28,7 +31,7 @@
     "mongoose": "^5.9.5"
   },
   "devDependencies": {
-    "concurrency": "^0.1.4",
+    "concurrently": "^5.1.0",
     "nodemon": "^2.0.2"
   }
 }
