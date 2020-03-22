@@ -24,37 +24,15 @@ export class Book extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-      })
-      .then(
+        // console.log('here' , data);
+        // console.log('in id is ', id)
+        // console.log('contacts', this.state.contacts)
         this.setState({
-          deleted: true
-        })
-      )
-      .catch(console.log);
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    fetch('http://localhost:5000/api/contacts', {
-      method: 'GET',
-      headers: {
-        'x-auth-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWU3Mzc1ZDFlMDRjYzIzOTg4NjBhNWZkIn0sImlhdCI6MTU4NDYyNTEwNSwiZXhwIjoxNTg0OTg1MTA1fQ.TMKFR2y3mRT9uURdIOuYtkhQFbXsqSQltDT_F29IpCY'
-      }
-    })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ contacts: data, isLoaded: true });
-        console.log(data);
+          contacts: this.state.contacts.filter((contact) => contact._id !== id)
+        });
       })
-      .catch(console.log);
-  }
-
-  shouldComponentUpdate(prevProps, prevState) {
-    if (prevState.deleted == this.state.deleted) {
-      return true;
-    }
-  }
+      .catch(err => (console.log))
+  };
 
   componentDidMount() {
     fetch('http://localhost:5000/api/contacts', {
@@ -66,11 +44,11 @@ export class Book extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({ contacts: data, isLoaded: true });
-        console.log(data);
+        this.setState({ contacts: data.data, isLoaded: true });
+
       })
       .catch(console.log);
-  }
+    }
   render() {
     return (
       <div>
@@ -81,7 +59,7 @@ export class Book extends Component {
         </div>
         {this.state.isLoaded ? (
           <div className="row" key="1">
-            {this.state.contacts.data.map(contact => (
+            {this.state.contacts.map(contact => (
               <div className="col-sm-6" key={contact.name.toString()}>
                 <Card
                   data={contact}
