@@ -19,7 +19,11 @@ router.get('/', auth, async (req, res) => {
         }).sort({
             date: -1 //the most recent contacts first 
         });
-        res.json(contacts);
+        const total = await Contact.countDocuments();
+        res.json({
+            data: contacts,
+            number: total
+        });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');

@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 //load env vars
 dotenv.config({
@@ -12,6 +13,8 @@ dotenv.config({
 connectDB();
 
 const app = express();
+
+app.use(cors());
 
 //body parser
 app.use(express.json());
